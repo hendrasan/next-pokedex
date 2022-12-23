@@ -7,14 +7,6 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Link from '@/components/Link';
 
-// const StyledButton = styled(Button)`
-//   /* background: #20b2aa; */
-
-//   :hover {
-//     /* background: #2e8b57; */
-//   }
-// `;
-
 const StyledLink = styled(Link)(
   ({ theme }) => `
   background: ${theme.palette.primary.main};
