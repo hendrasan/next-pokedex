@@ -1,0 +1,79 @@
+import * as React from "react";
+import Popover from "@mui/material/Popover";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import LanguageIcon from "@mui/icons-material/Language";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { styled } from "@mui/material/styles";
+import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+
+const PopoverButton = styled(Button)(
+  ({ theme }) => `
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #7B8082;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-family: ${theme.typography.overline.fontFamily};
+    font-size: ${theme.typography.overline.fontSize};
+`
+);
+
+export default function LanguageSwitcher() {
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null
+  );
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "language-switcher-popover" : undefined;
+
+  return (
+    <>
+      <PopoverButton
+        startIcon={<LanguageIcon style={{ fontSize: "14px" }} />}
+        endIcon={<ExpandMoreIcon style={{ fontSize: "12px" }} />}
+        onClick={handleClick}
+      >
+        English
+      </PopoverButton>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <nav aria-label="main mailbox folders">
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton dense={true}>
+                <ListItemText primary="English" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton dense={true}>
+                <ListItemText primary="Indonesia" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </nav>
+      </Popover>
+    </>
+  );
+}
