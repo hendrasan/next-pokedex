@@ -21,10 +21,17 @@ type HomeProps = {
 };
 
 export default function Home({ pokemons, count }: HomeProps) {
+  const [selectedPokemon, setSelectedPokemon] =
+    React.useState<PokemonCardItem | null>(null);
   const myRef = React.useRef<null | HTMLDivElement>(null);
 
   const scrollToPokedex = () =>
     myRef.current?.scrollIntoView({ behavior: "smooth" });
+
+  const handleCardClicked = (pokemon: PokemonCardItem) => {
+    console.log(pokemon);
+    setSelectedPokemon(pokemon);
+  };
 
   return (
     <>
@@ -112,21 +119,12 @@ export default function Home({ pokemons, count }: HomeProps) {
           <Grid container spacing={3}>
             {pokemons.map((pokemon) => (
               <Grid xs={12} sm={6} md={4} key={pokemon.id}>
-                <PokemonCard pokemon={pokemon} />
+                <PokemonCard
+                  pokemon={pokemon}
+                  onCardClicked={() => handleCardClicked(pokemon)}
+                />
               </Grid>
             ))}
-            {/* <Grid xs={12} sm={6} md={4}>
-              <PokemonCard />
-            </Grid>
-            <Grid xs={12} sm={6} md={4}>
-              <PokemonCard />
-            </Grid>
-            <Grid xs={12} sm={6} md={4}>
-              <PokemonCard />
-            </Grid>
-            <Grid xs={12} sm={6} md={4}>
-              <PokemonCard />
-            </Grid> */}
           </Grid>
         </Container>
       </Box>
@@ -138,8 +136,6 @@ export const getStaticProps: GetStaticProps = async () => {
   let data = await getPokemons({
     limit: PER_PAGE,
   });
-
-  console.log(data);
 
   return {
     props: {

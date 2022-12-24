@@ -9,20 +9,57 @@ import Image from "next/image";
 
 import Chip from "@/components/Chip";
 import { PokemonCardItem } from "@/types/Pokemon";
-import { padWithZero, capitalize } from "@/libs/helpers";
+import { padWithZero } from "@/libs/helpers";
+import styled from "@emotion/styled";
+
+const StyledCard = styled(Card)({
+  cursor: "pointer",
+  borderRadius: "24px",
+  boxShadow: "5px 10px 25px rgba(0, 0, 0, 0.35)",
+
+  img: {
+    transition: "transform 0.2s ease-in-out",
+  },
+
+  "&:hover img": {
+    // transform: "scale(1.1)",
+    animation: `wobble .9s ease-out`,
+  },
+
+  "@keyframes wobble": {
+    "0%, 100%": {
+      transform: "translateX(0%)",
+      transformOrigin: "50% 50%",
+    },
+    "15%": {
+      transform: "translateX(-20px) rotate(-6deg)",
+    },
+    "30%": {
+      transform: "translateX(10px) rotate(6deg)",
+    },
+    "45%": {
+      transform: "translateX(-10px) rotate(-3.6deg)",
+    },
+    "60%": {
+      transform: "translateX(5px) rotate(2.4deg)",
+    },
+    "75%": {
+      transform: "translateX(-3px) rotate(-1.2deg)",
+    },
+  },
+});
 
 type PokemonCardProps = {
   pokemon: PokemonCardItem;
+  onCardClicked: () => void;
 };
 
-export default function PokemonCard({ pokemon }: PokemonCardProps) {
+export default function PokemonCard({
+  pokemon,
+  onCardClicked,
+}: PokemonCardProps) {
   return (
-    <Card
-      sx={{
-        borderRadius: "24px",
-        boxShadow: "5px 10px 25px rgba(0, 0, 0, 0.35)",
-      }}
-    >
+    <StyledCard onClick={onCardClicked}>
       <CardContent
         sx={{
           px: {
@@ -35,13 +72,17 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
           },
         }}
       >
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           <Image
-            src="/images/placeholder.jpg"
-            alt="placeholder"
+            src={pokemon.sprite}
+            alt={pokemon.name + " sprite"}
             width={200}
             height={200}
-            style={{ width: "100%", height: "auto" }}
           />
         </Box>
         <Typography
@@ -82,6 +123,6 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
           ))}
         </Grid>
       </CardContent>
-    </Card>
+    </StyledCard>
   );
 }

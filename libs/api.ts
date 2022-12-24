@@ -2,6 +2,11 @@ import axios from "axios";
 import { Pokemon, PokemonMinimal } from "@/types/Pokemon";
 import { capitalize, getLastUrlSegment } from "./helpers";
 
+const axiosInstance = axios.create({
+  baseURL: "https://pokeapi.co/api/v2",
+  headers: { "Accept-Encoding": "gzip,deflate,compress" }, // fix for axios 1.2.1
+});
+
 type PokemonsListParams = {
   limit?: number;
   offset?: number;
@@ -12,11 +17,8 @@ export const getPokemons = async ({
   offset = 0,
 }: PokemonsListParams) => {
   // use axios
-  const response = await axios.get(
-    `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`,
-    {
-      headers: { "Accept-Encoding": "gzip,deflate,compress" }, // fix for axios 1.2.1
-    }
+  const response = await axiosInstance.get(
+    `/pokemon?limit=${limit}&offset=${offset}`
   );
 
   const pokemons = await Promise.all(
@@ -28,7 +30,7 @@ export const getPokemons = async ({
       }
 
       const pokemonDetail = await getPokemon(id);
-      // console.log(pokemonDetail);
+
       return {
         ...pokemon,
         ...pokemonDetail,
@@ -48,9 +50,7 @@ export const getPokemons = async ({
 };
 
 export const getPokemon = async (id: string) => {
-  const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`, {
-    headers: { "Accept-Encoding": "gzip,deflate,compress" }, // fix for axios 1.2.1
-  });
+  const response = await axiosInstance.get(`/pokemon/${id}`);
 
   const pokemon = response.data;
 
