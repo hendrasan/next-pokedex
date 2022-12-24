@@ -1,16 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
 
 import * as React from "react";
-import { styled, darken } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Link from "@/components/Link";
-import { Stack } from "@mui/system";
-import { Button, Card, CardContent } from "@mui/material";
-import { PrimaryButton } from "@/components/Button";
+import Stack from "@mui/system/Stack";
 import Grid from "@mui/material/Unstable_Grid2";
 import Image from "next/image";
+import { PrimaryButton } from "@/components/Button";
+import PokemonCard from "@/components/PokemonCard";
 
 export default function Home() {
   const myRef = React.useRef<null | HTMLDivElement>(null);
@@ -103,40 +101,16 @@ export default function Home() {
 
           <Grid container spacing={3}>
             <Grid xs={12} sm={6} md={4}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h5" component="h2">
-                    Poke Name
-                  </Typography>
-                </CardContent>
-              </Card>
+              <PokemonCard />
             </Grid>
             <Grid xs={12} sm={6} md={4}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h5" component="h2">
-                    Poke Name
-                  </Typography>
-                </CardContent>
-              </Card>
+              <PokemonCard />
             </Grid>
             <Grid xs={12} sm={6} md={4}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h5" component="h2">
-                    Poke Name
-                  </Typography>
-                </CardContent>
-              </Card>
+              <PokemonCard />
             </Grid>
             <Grid xs={12} sm={6} md={4}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h5" component="h2">
-                    Poke Name
-                  </Typography>
-                </CardContent>
-              </Card>
+              <PokemonCard />
             </Grid>
           </Grid>
         </Container>
