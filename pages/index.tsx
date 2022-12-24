@@ -9,8 +9,18 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Image from "next/image";
 import { PrimaryButton } from "@/components/Button";
 import PokemonCard from "@/components/PokemonCard";
+import { GetStaticProps } from "next";
+import { getPokemons } from "@/libs/api";
+import { PokemonCardItem } from "@/types/Pokemon";
 
-export default function Home() {
+const PER_PAGE = 9;
+
+type HomeProps = {
+  pokemons: PokemonCardItem[];
+  count: number;
+};
+
+export default function Home({ pokemons, count }: HomeProps) {
   const myRef = React.useRef<null | HTMLDivElement>(null);
 
   const scrollToPokedex = () =>
@@ -96,11 +106,16 @@ export default function Home() {
             >
               PokèDex
             </Typography>
-            <Typography>All Generation totaling 999999 Pokemon</Typography>
+            <Typography>All Generation totaling {count} Pokemon</Typography>
           </Stack>
 
           <Grid container spacing={3}>
-            <Grid xs={12} sm={6} md={4}>
+            {pokemons.map((pokemon) => (
+              <Grid xs={12} sm={6} md={4} key={pokemon.id}>
+                <PokemonCard pokemon={pokemon} />
+              </Grid>
+            ))}
+            {/* <Grid xs={12} sm={6} md={4}>
               <PokemonCard />
             </Grid>
             <Grid xs={12} sm={6} md={4}>
@@ -111,10 +126,27 @@ export default function Home() {
             </Grid>
             <Grid xs={12} sm={6} md={4}>
               <PokemonCard />
-            </Grid>
+            </Grid> */}
           </Grid>
         </Container>
       </Box>
     </>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  let data = await getPokemons({
+    limit: PER_PAGE,
+  });
+
+  console.log(data);
+
+  return {
+    props: {
+      pokemons: data.pokemons,
+      count: data.count,
+      next: data.next,
+      previous: data.previous,
+    },
+  };
+};

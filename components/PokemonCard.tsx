@@ -8,8 +8,14 @@ import Box from "@mui/material/Box";
 import Image from "next/image";
 
 import Chip from "@/components/Chip";
+import { PokemonCardItem } from "@/types/Pokemon";
+import { padWithZero, capitalize } from "@/libs/helpers";
 
-export default function PokemonCard() {
+type PokemonCardProps = {
+  pokemon: PokemonCardItem;
+};
+
+export default function PokemonCard({ pokemon }: PokemonCardProps) {
   return (
     <Card
       sx={{
@@ -38,25 +44,42 @@ export default function PokemonCard() {
             style={{ width: "100%", height: "auto" }}
           />
         </Box>
-        <Typography variant="caption">#001</Typography>
+        <Typography
+          variant="caption"
+          sx={{
+            fontSize: {
+              xs: 14,
+              md: 16,
+              lg: 20,
+            },
+            fontWeight: "bold",
+            color: "#B3B6B8",
+          }}
+        >
+          #{padWithZero(pokemon.id, 3)}
+        </Typography>
 
-        <Typography variant="h5" component="h2">
-          Poke Name
+        <Typography
+          variant="h5"
+          component="h2"
+          sx={{
+            fontSize: {
+              xs: 24,
+              md: 32,
+              lg: 40,
+            },
+            fontWeight: "bold",
+          }}
+        >
+          {pokemon.formattedName}
         </Typography>
 
         <Grid container spacing={1} sx={{ px: 0 }}>
-          <Grid xs={6}>
-            <Chip type="fire" />
-          </Grid>
-          <Grid xs={6}>
-            <Chip type="grass" />
-          </Grid>
-          <Grid xs={6}>
-            <Chip type="flying" />
-          </Grid>
-          <Grid xs={6}>
-            <Chip type="psychic" />
-          </Grid>
+          {pokemon.types.map(({ type }) => (
+            <Grid xs={6} key={type.name}>
+              <Chip type={type.name} />
+            </Grid>
+          ))}
         </Grid>
       </CardContent>
     </Card>
