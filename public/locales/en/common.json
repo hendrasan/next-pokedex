@@ -1,0 +1,15 @@
+{
+  "nav": {
+    "home": "Home",
+    "type": "Pokemon Type"
+  },
+  "hero": {
+    "heading": "All the Pokémon data you'll ever need in one place!",
+    "subheading": "Thousands of data compiled into one place",
+    "button": "Check Pokedex"
+  },
+  "pokedex": {
+    "heading": "PokèDex",
+    "subheading": "All Generation totaling {{ count }} Pokemon"
+  }
+}

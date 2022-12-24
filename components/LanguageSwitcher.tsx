@@ -5,6 +5,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { useRouter } from "next/router";
 
 const PopoverButton = styled(Button)(
   ({ theme }) => `
@@ -19,7 +20,14 @@ const PopoverButton = styled(Button)(
 `
 );
 
+const locales: { [key: string]: string } = {
+  en: "English",
+  id: "Indonesia",
+};
+
 export default function LanguageSwitcher() {
+  const router = useRouter();
+
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
@@ -32,6 +40,11 @@ export default function LanguageSwitcher() {
     setAnchorEl(null);
   };
 
+  const changeLanguage = (lang: string) => {
+    router.push(router.asPath, undefined, { locale: lang });
+    handleClose();
+  };
+
   const open = Boolean(anchorEl);
   const id = open ? "language-switcher-popover" : undefined;
 
@@ -42,7 +55,7 @@ export default function LanguageSwitcher() {
         endIcon={<ExpandMoreIcon style={{ fontSize: "12px" }} />}
         onClick={handleClick}
       >
-        English
+        {locales[router.locale ?? "en"]}
       </PopoverButton>
       <Popover
         id={id}
@@ -58,15 +71,15 @@ export default function LanguageSwitcher() {
           horizontal: "right",
         }}
       >
-        <nav aria-label="main mailbox folders">
+        <nav>
           <List>
             <ListItem disablePadding>
-              <ListItemButton dense={true}>
+              <ListItemButton dense={true} onClick={() => changeLanguage("en")}>
                 <ListItemText primary="English" />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton dense={true}>
+              <ListItemButton dense={true} onClick={() => changeLanguage("id")}>
                 <ListItemText primary="Indonesia" />
               </ListItemButton>
             </ListItem>

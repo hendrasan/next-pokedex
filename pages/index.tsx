@@ -13,6 +13,9 @@ import { GetStaticProps } from "next";
 import { getPokemons } from "@/libs/api";
 import { PokemonCardItem } from "@/types/Pokemon";
 
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
+
 const PER_PAGE = 9;
 
 type HomeProps = {
@@ -21,6 +24,8 @@ type HomeProps = {
 };
 
 export default function Home({ pokemons, count }: HomeProps) {
+  const { t } = useTranslation("common");
+
   const [selectedPokemon, setSelectedPokemon] =
     React.useState<PokemonCardItem | null>(null);
   const myRef = React.useRef<null | HTMLDivElement>(null);
@@ -29,7 +34,6 @@ export default function Home({ pokemons, count }: HomeProps) {
     myRef.current?.scrollIntoView({ behavior: "smooth" });
 
   const handleCardClicked = (pokemon: PokemonCardItem) => {
-    console.log(pokemon);
     setSelectedPokemon(pokemon);
   };
 
@@ -53,16 +57,16 @@ export default function Home({ pokemons, count }: HomeProps) {
                   mb: 2,
                 }}
               >
-                All the Pokémon data you'll ever need in one place!
+                {t("hero.heading")}
               </Typography>
               <Typography sx={{ color: "gray.main" }}>
-                Thousands of data compiled into one place
+                {t("hero.subheading")}
               </Typography>
               <PrimaryButton
                 sx={{ mt: 4, alignSelf: "flex-start" }}
                 onClick={scrollToPokedex}
               >
-                Check PokèDex
+                {t("hero.button")}
               </PrimaryButton>
             </Stack>
           </Grid>
@@ -111,9 +115,9 @@ export default function Home({ pokemons, count }: HomeProps) {
               component="h2"
               sx={{ fontSize: 40, fontWeight: "bold" }}
             >
-              PokèDex
+              {t("pokedex.heading")}
             </Typography>
-            <Typography>All Generation totaling {count} Pokemon</Typography>
+            <Typography>{t("pokedex.subheading", { count })}</Typography>
           </Stack>
 
           <Grid container spacing={3}>
@@ -132,13 +136,14 @@ export default function Home({ pokemons, count }: HomeProps) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   let data = await getPokemons({
     limit: PER_PAGE,
   });
 
   return {
     props: {
+      ...(await serverSideTranslations(locale ?? "en", ["common"])),
       pokemons: data.pokemons,
       count: data.count,
       next: data.next,

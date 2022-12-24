@@ -7,6 +7,8 @@ import Link from "@/components/Link";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useRouter } from "next/router";
 
+import { useTranslation } from "next-i18next";
+
 const LanguageSwitcherBar = styled("div")({
   background: "#F7F8F8",
 });
@@ -46,6 +48,7 @@ const StyledNavLink = styled(Link)(
 
 export default function Navbar() {
   const router = useRouter();
+  const { t } = useTranslation("common");
 
   return (
     <>
@@ -89,7 +92,7 @@ export default function Navbar() {
               underline="none"
               className={router.pathname == "/" ? "active" : ""}
             >
-              Home
+              {t("nav.home")}
             </StyledNavLink>
 
             <StyledNavLink
@@ -97,7 +100,7 @@ export default function Navbar() {
               underline="none"
               className={router.pathname == "/type" ? "active" : ""}
             >
-              Pokemon Type
+              {t("nav.type")}
             </StyledNavLink>
           </Stack>
         </Stack>

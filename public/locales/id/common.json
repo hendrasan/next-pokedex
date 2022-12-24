@@ -1,0 +1,15 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "type": "Pokemon Type"
+  },
+  "hero": {
+    "heading": "Semua data Pokémon yang kamu ingin tahu dalam satu tempat!",
+    "subheading": "Ribuan data dapat kamu cari tahu di sini",
+    "button": "Lihat Pokedex"
+  },
+  "pokedex": {
+    "heading": "PokèDex",
+    "subheading": "Data semua generasi sebanyak {{ count }} Pokemon"
+  }
+}
