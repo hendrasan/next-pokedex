@@ -1,6 +1,5 @@
 import * as React from "react";
 import Popover from "@mui/material/Popover";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import LanguageIcon from "@mui/icons-material/Language";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -12,7 +11,7 @@ const PopoverButton = styled(Button)(
     background: none;
     border: none;
     cursor: pointer;
-    color: #7B8082;
+    color: ${theme.palette.gray.main};
     padding-top: 0;
     padding-bottom: 0;
     font-family: ${theme.typography.overline.fontFamily};

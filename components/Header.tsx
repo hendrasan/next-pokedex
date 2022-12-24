@@ -13,7 +13,7 @@ const LanguageSwitcherBar = styled("div")({
 
 const StyledNavLink = styled(Link)(
   ({ theme }) => `
-    color: #42494d;
+    color: ${theme.palette.neutral.main};
     position: relative;
 
     &:after {
@@ -70,7 +70,12 @@ export default function Navbar() {
           spacing={{ xs: 2, md: 5 }}
         >
           <Link href="/">
-            <Image src="/logo@2x.png" alt="logo" width={167} height={60} />
+            <Image
+              src="/images/logo@2x.png"
+              alt="logo"
+              width={167}
+              height={60}
+            />
           </Link>
 
           <Stack
