@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import Image from "next/image";
 
 import Chip from "@/components/Chip";
-import { PokemonCardItem } from "@/types/Pokemon";
+import { PokemonCardAndModal } from "@/types/Pokemon";
 import { padWithZero } from "@/libs/helpers";
 import styled from "@emotion/styled";
 
@@ -50,7 +50,7 @@ const StyledCard = styled(Card)({
 });
 
 type PokemonCardProps = {
-  pokemon: PokemonCardItem;
+  pokemon: PokemonCardAndModal;
   onCardClicked: () => void;
 };
 

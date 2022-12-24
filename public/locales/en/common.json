@@ -11,5 +11,8 @@
   "pokedex": {
     "heading": "PokèDex",
     "subheading": "All Generation totaling {{ count }} Pokemon"
+  },
+  "button": {
+    "moreDetail": "More Detail"
   }
 }

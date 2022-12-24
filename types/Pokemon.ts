@@ -3,7 +3,7 @@ export type PokemonMinimal = {
   url: string;
 };
 
-export type PokemonCardItem = Pick<Pokemon, "types"> &
+export type PokemonCardAndModal = Pokemon &
   PokemonMinimal & {
     id: string;
     formattedName: string;
@@ -24,6 +24,7 @@ export type Pokemon = {
 export type Ability = {
   ability: {
     name: string;
+    is_hidden: boolean;
   };
 };
 

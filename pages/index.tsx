@@ -7,19 +7,21 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/system/Stack";
 import Grid from "@mui/material/Unstable_Grid2";
 import Image from "next/image";
+
 import { PrimaryButton } from "@/components/Button";
 import PokemonCard from "@/components/PokemonCard";
 import { GetStaticProps } from "next";
 import { getPokemons } from "@/libs/api";
-import { PokemonCardItem } from "@/types/Pokemon";
+import { PokemonCardAndModal } from "@/types/Pokemon";
 
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import PokemonDetailModal from "@/components/PokemonDetailModal";
 
 const PER_PAGE = 9;
 
 type HomeProps = {
-  pokemons: PokemonCardItem[];
+  pokemons: PokemonCardAndModal[];
   count: number;
 };
 
@@ -27,15 +29,17 @@ export default function Home({ pokemons, count }: HomeProps) {
   const { t } = useTranslation("common");
 
   const [selectedPokemon, setSelectedPokemon] =
-    React.useState<PokemonCardItem | null>(null);
+    React.useState<PokemonCardAndModal | null>(null);
   const myRef = React.useRef<null | HTMLDivElement>(null);
 
   const scrollToPokedex = () =>
     myRef.current?.scrollIntoView({ behavior: "smooth" });
 
-  const handleCardClicked = (pokemon: PokemonCardItem) => {
+  const handleCardClicked = (pokemon: PokemonCardAndModal) => {
     setSelectedPokemon(pokemon);
   };
+
+  const handleClose = () => setSelectedPokemon(null);
 
   return (
     <>
@@ -99,6 +103,10 @@ export default function Home({ pokemons, count }: HomeProps) {
           </Grid>
         </Grid>
       </Container>
+
+      {selectedPokemon && (
+        <PokemonDetailModal pokemon={selectedPokemon} onClose={handleClose} />
+      )}
 
       <Box
         id="pokedex"

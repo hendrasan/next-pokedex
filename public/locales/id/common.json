@@ -11,5 +11,8 @@
   "pokedex": {
     "heading": "PokèDex",
     "subheading": "Data semua generasi sebanyak {{ count }} Pokemon"
+  },
+  "button": {
+    "moreDetail": "Lihat Detail"
   }
 }
