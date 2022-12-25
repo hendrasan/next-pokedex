@@ -105,11 +105,11 @@ export default function Home({ initialPokemons, count }: HomeProps) {
                 width: {
                   xs: "240px",
                   sm: "300px",
-                  md: "100%",
+                  md: "400px",
                 },
                 margin: {
                   xs: "0 auto",
-                  md: "0",
+                  md: "0 0 0 auto",
                 },
               }}
             >

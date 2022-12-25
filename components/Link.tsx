@@ -148,6 +148,7 @@ export const PrimaryLink = styled(Link)(
   text-transform: none;
 
   :hover {
+    text-decoration: none;
     background: ${darken(theme.palette.primary.main, 0.2)};
   }
 `
