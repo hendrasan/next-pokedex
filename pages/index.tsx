@@ -112,9 +112,14 @@ export default function Home({ pokemons, count }: HomeProps) {
         id="pokedex"
         ref={myRef}
         sx={{
+          position: "relative",
           backgroundColor: "primary.light",
           minHeight: "100vh",
           py: { xs: 5, md: 10 },
+          backgroundImage:
+            "url(/images/quarter-circle-top-left.svg), url(/images/quarter-circle-bottom-right.svg)",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "top left, bottom right",
         }}
       >
         <Container maxWidth="lg">
