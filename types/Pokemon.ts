@@ -10,6 +10,17 @@ export type PokemonCardAndModal = Pokemon &
     sprite: string;
   };
 
+export type PokemonEvolution = PokemonMinimal & {
+  id: string;
+  formattedName: string;
+  sprite: string;
+};
+
+export type PokemonDetail = Pokemon & {
+  formattedName: string;
+  sprite: string;
+};
+
 export type Pokemon = {
   id: number;
   name: string;
@@ -18,7 +29,7 @@ export type Pokemon = {
   height: number;
   types: Type[];
   stats: Stat[];
-  sprites: Sprite[];
+  sprites: Sprite;
 };
 
 export type Ability = {
@@ -42,12 +53,15 @@ export type Stat = {
 };
 
 export type Sprite = {
-  back_default: string;
-  front_default: string;
-  back_female?: string;
-  front_female?: string;
-  back_shiny?: string;
-  front_shiny?: string;
-  back_shiny_female?: string;
-  front_shiny_female?: string;
+  [key: string]: string;
+  // back_default: string;
+  // front_default: string;
+  // back_female?: string;
+  // front_female?: string;
+  // back_shiny?: string;
+  // front_shiny?: string;
+  // back_shiny_female?: string;
+  // front_shiny_female?: string;
+  // other?: object;
+  // versions?: object;
 };

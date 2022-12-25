@@ -6,19 +6,21 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Stack from "@mui/system/Stack";
 import Grid from "@mui/material/Unstable_Grid2";
+
+import { GetStaticProps } from "next";
 import Image from "next/image";
 
 import { PrimaryButton } from "@/components/Button";
 import PokemonCard from "@/components/PokemonCard";
-import { GetStaticProps } from "next";
+import PokemonDetailModal from "@/components/PokemonDetailModal";
+import Pagination from "@/components/Pagination";
+import { NativeSelect } from "@/components/NativeSelect";
+
 import { getPokemons } from "@/libs/api";
 import { PokemonCardAndModal } from "@/types/Pokemon";
 
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
-import PokemonDetailModal from "@/components/PokemonDetailModal";
-import Pagination from "@/components/Pagination";
-import { NativeSelect } from "@/components/NativeSelect";
 
 const PER_PAGE = 9;
 

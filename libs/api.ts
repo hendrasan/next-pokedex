@@ -1,5 +1,9 @@
 import axios from "axios";
-import { Pokemon, PokemonMinimal } from "@/types/Pokemon";
+import {
+  PokemonDetail,
+  PokemonCardAndModal,
+  PokemonMinimal,
+} from "@/types/Pokemon";
 import { capitalize, getLastUrlSegment } from "./helpers";
 
 const axiosInstance = axios.create({
@@ -54,7 +58,7 @@ export const getPokemon = async (id: string) => {
 
   const pokemon = response.data;
 
-  const item: Pokemon = {
+  const item: PokemonDetail = {
     id: pokemon.id,
     name: pokemon.name,
     abilities: pokemon.abilities,
@@ -63,9 +67,62 @@ export const getPokemon = async (id: string) => {
     types: pokemon.types,
     stats: pokemon.stats,
     sprites: pokemon.sprites,
+    formattedName: capitalize(pokemon.name),
+    sprite: id ? getPokemonDefaultImage(id) : "",
   };
 
   return item;
+};
+
+export const getPokemonEvolution = async (id: string) => {
+  const response = await axiosInstance.get(`/pokemon-species/${id}`);
+
+  const species = response.data;
+
+  const evoChainUrl = species.evolution_chain.url;
+
+  let evoChain = [];
+
+  const { data } = await axiosInstance.get(evoChainUrl);
+
+  let evoData = data.chain;
+
+  do {
+    let numberOfEvolutions = evoData.evolves_to.length;
+
+    evoChain.push({
+      name: evoData.species.name,
+      url: evoData.species.url,
+    });
+
+    if (numberOfEvolutions > 1) {
+      for (let i = 1; i < numberOfEvolutions; i++) {
+        evoChain.push({
+          name: evoData.species.name,
+          url: evoData.species.url,
+        });
+      }
+    }
+
+    evoData = evoData.evolves_to[0];
+  } while (!!evoData && evoData.hasOwnProperty("evolves_to"));
+
+  evoChain = evoChain.map((pokemon: PokemonMinimal) => {
+    const id = getLastUrlSegment(pokemon.url);
+
+    if (!id) {
+      return;
+    }
+
+    return {
+      ...pokemon,
+      id,
+      formattedName: capitalize(pokemon.name),
+      sprite: id ? getPokemonDefaultImage(id) : "",
+    };
+  });
+
+  return evoChain;
 };
 
 export const getPokemonId = (url: string) => {

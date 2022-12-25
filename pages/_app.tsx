@@ -1,4 +1,4 @@
-// import '../styles/globals.css'
+import "../styles/globals.css";
 import * as React from "react";
 import Head from "next/head";
 import type { AppProps } from "next/app";
