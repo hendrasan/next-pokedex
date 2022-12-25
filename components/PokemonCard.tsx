@@ -16,9 +16,14 @@ const StyledCard = styled(Card)({
   cursor: "pointer",
   borderRadius: "24px",
   boxShadow: "5px 10px 25px rgba(0, 0, 0, 0.35)",
+  height: "100%",
 
   img: {
     transition: "transform 0.2s ease-in-out",
+  },
+
+  ".MuiChip-root": {
+    width: "100%",
   },
 
   "&:hover img": {
@@ -115,7 +120,7 @@ export default function PokemonCard({
           {pokemon.formattedName}
         </Typography>
 
-        <Grid container spacing={1} sx={{ px: 0 }}>
+        <Grid container spacing={1} sx={{ px: 0, mt: "auto" }}>
           {pokemon.types.map(({ type }) => (
             <Grid xs={6} key={type.name}>
               <Chip type={type.name} />

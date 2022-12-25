@@ -4,7 +4,7 @@ import { capitalize, getLastUrlSegment } from "./helpers";
 
 const axiosInstance = axios.create({
   baseURL: "https://pokeapi.co/api/v2",
-  headers: { "Accept-Encoding": "gzip,deflate,compress" }, // fix for axios 1.2.1
+  // headers: { "Accept-Encoding": "gzip,deflate,compress" }, // fix for axios 1.2.1, but introduces another error, so revert back to version 1.1.3
 });
 
 type PokemonsListParams = {

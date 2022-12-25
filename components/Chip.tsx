@@ -17,7 +17,6 @@ export default function Chip({ type }: ChipProps) {
         px: 1,
         py: 1,
         fontWeight: "bold",
-        width: "100%",
       }}
       label={capitalize(type)}
     />

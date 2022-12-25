@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import * as React from "react";
+import { useEffect, useRef, useState } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -17,20 +17,27 @@ import { PokemonCardAndModal } from "@/types/Pokemon";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import PokemonDetailModal from "@/components/PokemonDetailModal";
+import Pagination from "@/components/Pagination";
+import { NativeSelect } from "@/components/NativeSelect";
 
 const PER_PAGE = 9;
 
 type HomeProps = {
-  pokemons: PokemonCardAndModal[];
+  initialPokemons: PokemonCardAndModal[];
   count: number;
 };
 
-export default function Home({ pokemons, count }: HomeProps) {
+export default function Home({ initialPokemons, count }: HomeProps) {
   const { t } = useTranslation("common");
 
+  const [pokemons, setPokemons] = useState(initialPokemons);
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(PER_PAGE);
+  const totalPage = Math.ceil(count / perPage);
+
   const [selectedPokemon, setSelectedPokemon] =
-    React.useState<PokemonCardAndModal | null>(null);
-  const myRef = React.useRef<null | HTMLDivElement>(null);
+    useState<PokemonCardAndModal | null>(null);
+  const myRef = useRef<null | HTMLDivElement>(null);
 
   const scrollToPokedex = () =>
     myRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -40,6 +47,23 @@ export default function Home({ pokemons, count }: HomeProps) {
   };
 
   const handleClose = () => setSelectedPokemon(null);
+
+  const handlePageChanged = (page: number) => {
+    setPage(page);
+  };
+
+  useEffect(() => {
+    const fetchPokemons = async () => {
+      const response = await getPokemons({
+        limit: perPage,
+        offset: (page - 1) * perPage,
+      });
+
+      setPokemons(response.pokemons);
+    };
+
+    fetchPokemons();
+  }, [page, perPage]);
 
   return (
     <>
@@ -123,14 +147,29 @@ export default function Home({ pokemons, count }: HomeProps) {
         }}
       >
         <Container maxWidth="lg">
-          <Stack direction="column" spacing={2} alignItems="center" mb={5}>
+          <Stack
+            direction="column"
+            spacing={2}
+            alignItems="center"
+            textAlign="center"
+            mb={5}
+          >
             <Typography
               component="h2"
               sx={{ fontSize: 40, fontWeight: "bold" }}
             >
               {t("pokedex.heading")}
             </Typography>
-            <Typography>{t("pokedex.subheading", { count })}</Typography>
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: 16,
+                  md: 24,
+                },
+              }}
+            >
+              {t("pokedex.subheading", { count })}
+            </Typography>
           </Stack>
 
           <Grid container spacing={3}>
@@ -143,6 +182,79 @@ export default function Home({ pokemons, count }: HomeProps) {
               </Grid>
             ))}
           </Grid>
+
+          <Box
+            sx={{
+              mt: 5,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              color: "#fff",
+              flexWrap: {
+                xs: "wrap",
+                lg: "nowrap",
+              },
+
+              ".MuiTypography-root": {
+                fontWeight: "bold",
+                fontSize: {
+                  xs: 16,
+                  md: 20,
+                },
+              },
+            }}
+          >
+            <Box
+              sx={{
+                order: { lg: 1 },
+                width: { xs: "50%", lg: "auto" },
+                py: { xs: 2, lg: 0 },
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography>Per Page:</Typography>
+              <NativeSelect
+                defaultValue={perPage}
+                sx={{
+                  ml: {
+                    xs: 2,
+                    sm: 4,
+                  },
+                }}
+                onChange={(e) => setPerPage(Number(e.target.value))}
+              >
+                <option value={9}>9</option>
+                <option value={18}>18</option>
+                <option value={36}>36</option>
+              </NativeSelect>
+            </Box>
+            <Box
+              sx={{
+                order: { lg: 3 },
+                width: { xs: "50%", lg: "auto" },
+                py: { xs: 2, lg: 0 },
+                textAlign: "right",
+              }}
+            >
+              <Typography>Total Data: {count}</Typography>
+            </Box>
+            <Box
+              sx={{
+                order: { lg: 2 },
+                display: "flex",
+                justifyContent: "center",
+                flex: "1 1 auto",
+              }}
+            >
+              <Pagination
+                count={totalPage}
+                page={page}
+                perPage={perPage}
+                onPageChanged={handlePageChanged}
+              />
+            </Box>
+          </Box>
         </Container>
       </Box>
     </>
@@ -157,7 +269,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
       ...(await serverSideTranslations(locale ?? "en", ["common"])),
-      pokemons: data.pokemons,
+      initialPokemons: data.pokemons,
       count: data.count,
       next: data.next,
       previous: data.previous,
