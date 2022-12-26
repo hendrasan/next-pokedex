@@ -224,7 +224,7 @@ export default function Home({ initialPokemons, count }: HomeProps) {
             >
               <Typography>Per Page:</Typography>
               <NativeSelect
-                overrideColor="#fff"
+                overridecolor="#fff"
                 defaultValue={perPage}
                 sx={{
                   ml: {
@@ -258,8 +258,8 @@ export default function Home({ initialPokemons, count }: HomeProps) {
               }}
             >
               <Pagination
-                overrideBgColor="#fff"
-                overrideTextColor={`${theme.palette.primary.main}`}
+                overridebgcolor="#fff"
+                overridetextcolor={`${theme.palette.primary.main}`}
                 count={totalPage}
                 page={page}
                 perPage={perPage}

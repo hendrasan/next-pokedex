@@ -3,19 +3,19 @@ import { styled, Theme, useTheme } from "@mui/material/styles";
 
 declare module "@mui/material/NativeSelect" {
   interface NativeSelectProps {
-    overrideColor?: string;
+    overridecolor?: string;
   }
 }
 
 export const NativeSelect = styled(MUINativeSelect)(
   ({
     theme,
-    overrideColor = theme.palette.neutral.main,
+    overridecolor = theme.palette.neutral.main,
   }: {
     theme: Theme;
-    overrideColor?: string;
+    overridecolor?: string;
   }) => ({
-    color: `${overrideColor}`,
+    color: `${overridecolor}`,
 
     ".MuiNativeSelect-select": {
       lineHeight: "20px",
@@ -23,7 +23,7 @@ export const NativeSelect = styled(MUINativeSelect)(
       fontWeight: "bold",
       borderRadius: "8px",
       border: `2px solid`,
-      borderColor: `${overrideColor}`,
+      borderColor: `${overridecolor}`,
       padding: "8px 12px",
 
       [theme.breakpoints.up("sm")]: {
@@ -57,7 +57,7 @@ export const NativeSelect = styled(MUINativeSelect)(
     },
 
     ".MuiSvgIcon-root": {
-      color: `${overrideColor}`,
+      color: `${overridecolor}`,
     },
     "&:before": {
       display: "none",

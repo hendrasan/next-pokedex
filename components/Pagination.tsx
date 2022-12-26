@@ -9,20 +9,20 @@ import clsx from "clsx";
 
 declare module "@mui/material/Pagination" {
   interface PaginationProps {
-    overrideBgColor?: string;
-    overrideTextColor?: string;
+    overridebgcolor?: string;
+    overridetextcolor?: string;
   }
 }
 
 const StyledPagination = styled(MUIPagination)(
   ({
     theme,
-    overrideBgColor = theme.palette.neutral.main,
-    overrideTextColor = "#fff",
+    overridebgcolor = theme.palette.neutral.main,
+    overridetextcolor = "#fff",
   }: {
     theme: Theme;
-    overrideBgColor?: string;
-    overrideTextColor?: string;
+    overridebgcolor?: string;
+    overridetextcolor?: string;
   }) => ({
     "&.custom-pagination": {
       ".MuiPagination-ul": {
@@ -37,21 +37,21 @@ const StyledPagination = styled(MUIPagination)(
 
       ".MuiPaginationItem-root:not(.MuiPaginationItem-ellipsis)": {
         border: `3px solid`,
-        borderColor: `${overrideBgColor}`,
+        borderColor: `${overridebgcolor}`,
         fontSize: "20px",
         padding: "15px",
       },
     },
 
     ".MuiPaginationItem-ellipsis": {
-      color: `${overrideBgColor}`,
+      color: `${overridebgcolor}`,
       fontWeight: "bold",
     },
 
     ".MuiPaginationItem-root:not(.MuiPaginationItem-ellipsis)": {
-      color: `${overrideBgColor}`,
+      color: `${overridebgcolor}`,
       border: `2px solid`,
-      borderColor: `${overrideBgColor}`,
+      borderColor: `${overridebgcolor}`,
       borderRadius: "8px",
       fontWeight: "bold",
       lineHeight: "20px",
@@ -59,8 +59,8 @@ const StyledPagination = styled(MUIPagination)(
       padding: "8px 12px",
 
       "&:hover, &.Mui-selected": {
-        background: `${overrideBgColor}`,
-        color: `${overrideTextColor}`,
+        background: `${overridebgcolor}`,
+        color: `${overridetextcolor}`,
       },
     },
 
@@ -91,8 +91,8 @@ type PaginationProps = {
   page?: number;
   perPage?: number;
   classNames?: string;
-  overrideBgColor?: string;
-  overrideTextColor?: string;
+  overridebgcolor?: string;
+  overridetextcolor?: string;
   onPageChanged: (page: number) => void;
 };
 
@@ -102,8 +102,8 @@ export default function Pagination({
   perPage = 9,
   classNames = "",
   onPageChanged,
-  overrideBgColor,
-  overrideTextColor,
+  overridebgcolor,
+  overridetextcolor,
 }: PaginationProps) {
   const theme = useTheme();
   const smallAndAbove = useMediaQuery(theme.breakpoints.up("sm"));
@@ -114,8 +114,8 @@ export default function Pagination({
       variant="outlined"
       shape="rounded"
       count={count}
-      overrideBgColor={overrideBgColor ?? theme.palette.neutral.main}
-      overrideTextColor={overrideTextColor ?? "#fff"}
+      overridebgcolor={overridebgcolor ?? theme.palette.neutral.main}
+      overridetextcolor={overridetextcolor ?? "#fff"}
       renderItem={(item) => (
         <PaginationItem
           slots={{

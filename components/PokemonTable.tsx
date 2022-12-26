@@ -185,7 +185,7 @@ export default function PokemonTable({
           <NativeSelect
             className="dense"
             defaultValue={9}
-            overrideColor={color}
+            overridecolor={color}
             sx={{
               ml: {
                 xs: 2,
@@ -219,8 +219,8 @@ export default function PokemonTable({
         >
           <Pagination
             classNames="dense"
-            overrideBgColor={color}
-            overrideTextColor="#fff"
+            overridebgcolor={color}
+            overridetextcolor="#fff"
             count={totalPage}
             page={page}
             perPage={perPage}
