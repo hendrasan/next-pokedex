@@ -4,19 +4,18 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
 
-import Link from "@/components/Link";
 import { GetStaticProps } from "next";
 
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import clsx from "clsx";
 
 import { capitalize } from "@/libs/helpers";
 import { getTypes, getPokemonsByType } from "@/libs/api";
 import { PokemonCardAndModal } from "@/types/Pokemon";
 import getTypeColor from "@/libs/getTypeColor";
 import PokemonTable from "@/components/PokemonTable";
+import PokemonTypeNav from "@/components/PokemonTypeNav";
 
 type PokemonTypeColor = {
   name: string;
@@ -119,7 +118,7 @@ export default function Type({ types }: { types: PokemonTypeColor[] }) {
         maxWidth="lg"
         sx={{ mt: { xs: 3, md: 5 }, position: "relative" }}
       >
-        <Grid container justifyContent="space-between">
+        <Grid container spacing={2} justifyContent="space-between">
           <Grid
             xs={12}
             md={3}
@@ -137,65 +136,45 @@ export default function Type({ types }: { types: PokemonTypeColor[] }) {
                   xs: 16,
                   md: 20,
                 },
+                mb: 2,
               }}
             >
               {t("pokemonTypes")}
             </Typography>
 
-            <Box
-              component="ul"
-              sx={{
-                pl: 2,
-              }}
-            >
-              {types.map((pokeType, index) => (
-                <Box
-                  component="li"
-                  key={pokeType.name}
-                  sx={{
-                    color: "gray.main",
-                    fontSize: 14,
-                    lineHeight: 1.5,
-                    mt: index === 0 ? 0 : 1,
-
-                    "&.active-type": {
-                      fontWeight: "bold",
-
-                      "&, .MuiLink-root": {
-                        color: pokeType.color,
-                      },
-                    },
-
-                    ".MuiLink-root": {
-                      color: "gray.main",
-                      textDecoration: "none",
-                    },
-                  }}
-                  className={clsx({
-                    "active-type": pokeType.name === type,
-                  })}
-                >
-                  <Link
-                    href={{
-                      pathname: pathname,
-                      query: { ...query, type: pokeType.name },
-                    }}
-                  >
-                    {capitalize(pokeType.name)}
-                  </Link>
-                </Box>
-              ))}
-            </Box>
+            <PokemonTypeNav types={types} currentType={type} />
           </Grid>
 
           <Grid xs={12} md={8}>
             {!type ? (
-              <Typography variant="h4" component="h1" gutterBottom>
+              <Typography
+                component="h1"
+                gutterBottom
+                sx={{
+                  fontSize: {
+                    xs: 24,
+                    md: 32,
+                    lg: 40,
+                  },
+                  fontWeight: "bold",
+                }}
+              >
                 {t("selectAType")}
               </Typography>
             ) : (
               <>
-                <Typography variant="h4" component="h1" gutterBottom>
+                <Typography
+                  component="h1"
+                  gutterBottom
+                  sx={{
+                    fontSize: {
+                      xs: 24,
+                      md: 32,
+                      lg: 40,
+                    },
+                    fontWeight: "bold",
+                  }}
+                >
                   {t("pokemonWithType", { type: capitalize(type ?? "") })}
                 </Typography>
 

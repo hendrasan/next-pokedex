@@ -17,5 +17,6 @@
   },
   "pokemonTypes": "Pokemon Types",
   "pokemonWithType": "Pokemon with Type {{ type }}",
-  "selectAType": "Please select a type first"
+  "selectAType": "Please select a type first",
+  "chooseAType": "Choose a type"
 }

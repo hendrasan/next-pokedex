@@ -17,5 +17,6 @@
   },
   "pokemonTypes": "Tipe Pokemon",
   "pokemonWithType": "Pokemon dengan Tipe {{ type }}",
-  "selectAType": "Silakan pilih salah satu tipe terlebih dulu"
+  "selectAType": "Silakan pilih salah satu tipe terlebih dulu",
+  "chooseAType": "Pilih tipe"
 }
