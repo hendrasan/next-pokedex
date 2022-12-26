@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import MUIChip from "@mui/material/Chip";
-import getTypeColour from "@/libs/getTypeColour";
+import getTypeColor from "@/libs/getTypeColor";
 import { capitalize } from "@/libs/helpers";
 
 type ChipProps = {
@@ -11,7 +11,7 @@ export default function Chip({ type }: ChipProps) {
   return (
     <MUIChip
       sx={{
-        background: getTypeColour(type),
+        background: getTypeColor(type),
         color: "#fff",
         fontSize: "1rem",
         px: 1,

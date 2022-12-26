@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "Beranda",
-    "type": "Pokemon Type"
+    "type": "Tipe Pokemon"
   },
   "hero": {
     "heading": "Semua data Pokémon yang kamu ingin tahu dalam satu tempat!",
@@ -14,5 +14,8 @@
   },
   "button": {
     "moreDetail": "Lihat Detail"
-  }
+  },
+  "pokemonTypes": "Tipe Pokemon",
+  "pokemonWithType": "Pokemon dengan Tipe {{ type }}",
+  "selectAType": "Silakan pilih salah satu tipe terlebih dulu"
 }

@@ -1,4 +1,4 @@
-const TYPE_COLOURS: Record<string, string> = {
+const TYPE_COLORS: Record<string, string> = {
   normal: "#a8a878",
   fire: "#f08030",
   fighting: "#c03028",
@@ -19,6 +19,6 @@ const TYPE_COLOURS: Record<string, string> = {
   flying: "#a890f0",
 };
 
-const getTypeColour = (colour: string) => TYPE_COLOURS[colour];
+const getTypeColor = (color: string) => TYPE_COLORS[color];
 
-export default getTypeColour;
+export default getTypeColor;

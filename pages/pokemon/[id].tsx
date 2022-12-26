@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -155,7 +155,7 @@ export default function Detail({ pokemon, evolutions }: DetailProps) {
             }}
           >
             {evolutions.map((ev, index) => (
-              <>
+              <Fragment key={ev.id}>
                 {index > 0 && (
                   <ArrowForwardIcon
                     sx={{
@@ -174,7 +174,6 @@ export default function Detail({ pokemon, evolutions }: DetailProps) {
                     alignItems: "center",
                     justifyContent: "center",
                   }}
-                  key={ev.id}
                 >
                   <Link href={`/pokemon/${ev.id}`}>
                     <Box
@@ -210,7 +209,7 @@ export default function Detail({ pokemon, evolutions }: DetailProps) {
                     {ev.formattedName}
                   </Typography>
                 </Box>
-              </>
+              </Fragment>
             ))}
           </Stack>
         </Stack>

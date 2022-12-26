@@ -3,8 +3,10 @@ import {
   PokemonDetail,
   PokemonCardAndModal,
   PokemonMinimal,
+  TypeMinimal,
 } from "@/types/Pokemon";
 import { capitalize, getLastUrlSegment } from "./helpers";
+import getTypeColor from "./getTypeColor";
 
 const axiosInstance = axios.create({
   baseURL: "https://pokeapi.co/api/v2",
@@ -20,7 +22,6 @@ export const getPokemons = async ({
   limit = 9,
   offset = 0,
 }: PokemonsListParams) => {
-  // use axios
   const response = await axiosInstance.get(
     `/pokemon?limit=${limit}&offset=${offset}`
   );
@@ -51,6 +52,32 @@ export const getPokemons = async ({
     next: response.data.next,
     previous: response.data.previous,
   };
+};
+
+export const getPokemonsByType = async (type: string) => {
+  const { data } = await axiosInstance.get(`/type/${type}`);
+
+  const pokemons = await Promise.all(
+    data.pokemon.map(async ({ pokemon }: { pokemon: PokemonMinimal }) => {
+      const id = getLastUrlSegment(pokemon.url);
+
+      if (!id) {
+        return;
+      }
+
+      const pokemonDetail = await getPokemon(id);
+
+      return {
+        ...pokemon,
+        ...pokemonDetail,
+        id,
+        formattedName: capitalize(pokemon.name),
+        sprite: id ? getPokemonDefaultImage(id) : "",
+      };
+    })
+  );
+
+  return pokemons;
 };
 
 export const getPokemon = async (id: string) => {
@@ -133,4 +160,19 @@ export const getPokemonId = (url: string) => {
 
 export const getPokemonDefaultImage = (id: string) => {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+};
+
+export const getTypes = async () => {
+  const { data } = await axiosInstance.get(`/type`);
+
+  const types = data.results
+    .filter(
+      (type: TypeMinimal) => type.name !== "unknown" && type.name !== "shadow"
+    )
+    .map((type: TypeMinimal) => ({
+      name: type.name,
+      color: getTypeColor(type.name),
+    }));
+
+  return types;
 };

@@ -1,56 +1,98 @@
 import MUIPagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled, Theme, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import clsx from "clsx";
 
-const StyledPagination = styled(MUIPagination)(({ theme }) => ({
-  "&.custom-pagination": {
-    ".MuiPagination-ul": {
-      "> li + li": {
-        marginLeft: "8px",
+declare module "@mui/material/Pagination" {
+  interface PaginationProps {
+    overrideBgColor?: string;
+    overrideTextColor?: string;
+  }
+}
+
+const StyledPagination = styled(MUIPagination)(
+  ({
+    theme,
+    overrideBgColor = theme.palette.neutral.main,
+    overrideTextColor = "#fff",
+  }: {
+    theme: Theme;
+    overrideBgColor?: string;
+    overrideTextColor?: string;
+  }) => ({
+    "&.custom-pagination": {
+      ".MuiPagination-ul": {
+        "> li + li": {
+          marginLeft: "8px",
+        },
+      },
+
+      ".MuiPaginationItem-ellipsis": {
+        fontSize: "20px",
+      },
+
+      ".MuiPaginationItem-root:not(.MuiPaginationItem-ellipsis)": {
+        border: `3px solid`,
+        borderColor: `${overrideBgColor}`,
+        fontSize: "20px",
+        padding: "15px",
       },
     },
 
     ".MuiPaginationItem-ellipsis": {
-      fontSize: "20px",
+      color: `${overrideBgColor}`,
+      fontWeight: "bold",
     },
 
     ".MuiPaginationItem-root:not(.MuiPaginationItem-ellipsis)": {
-      border: "3px solid #fff",
-      fontSize: "20px",
-      padding: "15px",
+      color: `${overrideBgColor}`,
+      border: `2px solid`,
+      borderColor: `${overrideBgColor}`,
+      borderRadius: "8px",
+      fontWeight: "bold",
+      lineHeight: "20px",
+      height: "auto",
+      padding: "8px 12px",
+
+      "&:hover, &.Mui-selected": {
+        background: `${overrideBgColor}`,
+        color: `${overrideTextColor}`,
+      },
     },
-  },
 
-  ".MuiPaginationItem-ellipsis": {
-    color: "#fff",
-    fontWeight: "bold",
-  },
+    "&.dense": {
+      "&.custom-pagination": {
+        ".MuiPagination-ul": {
+          "> li + li": {
+            marginLeft: "4px",
+          },
+        },
 
-  ".MuiPaginationItem-root:not(.MuiPaginationItem-ellipsis)": {
-    color: "#fff",
-    border: "2px solid #fff",
-    borderRadius: "8px",
-    fontWeight: "bold",
-    lineHeight: "20px",
-    height: "auto",
-    padding: "8px 12px",
+        ".MuiPaginationItem-ellipsis": {
+          fontSize: "12px",
+        },
 
-    "&:hover, &.Mui-selected": {
-      background: "#fff",
-      color: theme.palette.primary.main,
+        ".MuiPaginationItem-root:not(.MuiPaginationItem-ellipsis)": {
+          borderWidth: "2px",
+          fontSize: "12px",
+          padding: "8px",
+        },
+      },
     },
-  },
-}));
+  })
+);
 
 type PaginationProps = {
   count: number;
   page?: number;
   perPage?: number;
+  classNames?: string;
+  overrideBgColor?: string;
+  overrideTextColor?: string;
   onPageChanged: (page: number) => void;
 };
 
@@ -58,16 +100,22 @@ export default function Pagination({
   count,
   page = 1,
   perPage = 9,
+  classNames = "",
   onPageChanged,
+  overrideBgColor,
+  overrideTextColor,
 }: PaginationProps) {
   const theme = useTheme();
   const smallAndAbove = useMediaQuery(theme.breakpoints.up("sm"));
 
   return (
     <StyledPagination
+      page={page}
       variant="outlined"
       shape="rounded"
       count={count}
+      overrideBgColor={overrideBgColor ?? theme.palette.neutral.main}
+      overrideTextColor={overrideTextColor ?? "#fff"}
       renderItem={(item) => (
         <PaginationItem
           slots={{
@@ -79,7 +127,7 @@ export default function Pagination({
       )}
       showFirstButton={smallAndAbove}
       showLastButton={smallAndAbove}
-      className={clsx({ "custom-pagination": smallAndAbove })}
+      className={clsx([classNames, { "custom-pagination": smallAndAbove }])}
       onChange={(e, page) => onPageChanged(page)}
     />
   );

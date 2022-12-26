@@ -39,6 +39,11 @@ export type Ability = {
   };
 };
 
+export type TypeMinimal = {
+  name: string;
+  url: string;
+};
+
 export type Type = {
   type: {
     name: string;

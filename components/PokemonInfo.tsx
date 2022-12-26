@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
 import Stack from "@mui/material/Stack";
 
-import { PrimaryLink } from "@/components/Link";
+import Link, { PrimaryLink } from "@/components/Link";
 import Chip from "@/components/Chip";
 
 import { capitalize } from "@/libs/helpers";
@@ -126,9 +126,22 @@ export default function PokemonInfo({
               <Typography sx={{ fontWeight: "bold" }}>Type:</Typography>
             </Grid>
             <Grid xs={6}>
-              <Stack direction="row" spacing={2}>
+              <Stack
+                direction="row"
+                spacing={2}
+                sx={{
+                  ".MuiLink-root": {
+                    textDecoration: "none",
+                  },
+                  ".MuiChip-root": {
+                    cursor: "inherit",
+                  },
+                }}
+              >
                 {pokemon.types.map(({ type }: Type) => (
-                  <Chip key={type.name} type={type.name} />
+                  <Link key={type.name} href={`/type?type=${type.name}`}>
+                    <Chip type={type.name} />
+                  </Link>
                 ))}
               </Stack>
             </Grid>

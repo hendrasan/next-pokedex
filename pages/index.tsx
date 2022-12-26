@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Stack from "@mui/system/Stack";
 import Grid from "@mui/material/Unstable_Grid2";
+import { useTheme } from "@mui/material/styles";
 
 import { GetStaticProps } from "next";
 import Image from "next/image";
@@ -31,6 +32,7 @@ type HomeProps = {
 
 export default function Home({ initialPokemons, count }: HomeProps) {
   const { t } = useTranslation("common");
+  const theme = useTheme();
 
   const [pokemons, setPokemons] = useState(initialPokemons);
   const [page, setPage] = useState(1);
@@ -49,6 +51,11 @@ export default function Home({ initialPokemons, count }: HomeProps) {
   };
 
   const handleClose = () => setSelectedPokemon(null);
+
+  const handlePerPageChanged = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setPerPage(Number(e.target.value));
+    setPage(1);
+  };
 
   const handlePageChanged = (page: number) => {
     setPage(page);
@@ -217,6 +224,7 @@ export default function Home({ initialPokemons, count }: HomeProps) {
             >
               <Typography>Per Page:</Typography>
               <NativeSelect
+                overrideColor="#fff"
                 defaultValue={perPage}
                 sx={{
                   ml: {
@@ -224,7 +232,7 @@ export default function Home({ initialPokemons, count }: HomeProps) {
                     sm: 4,
                   },
                 }}
-                onChange={(e) => setPerPage(Number(e.target.value))}
+                onChange={handlePerPageChanged}
               >
                 <option value={9}>9</option>
                 <option value={18}>18</option>
@@ -250,6 +258,8 @@ export default function Home({ initialPokemons, count }: HomeProps) {
               }}
             >
               <Pagination
+                overrideBgColor="#fff"
+                overrideTextColor={`${theme.palette.primary.main}`}
                 count={totalPage}
                 page={page}
                 perPage={perPage}
